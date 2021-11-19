@@ -1,7 +1,5 @@
 #ifndef EVIL_VEC_H
 #define EVIL_VEC_H
-#include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
