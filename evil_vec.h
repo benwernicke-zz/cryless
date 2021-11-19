@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-size_t vec_size(void* vec);
-void* vec_create();
-void vec_free(void* vec);
+static size_t vec_size(void* vec);
+static void* vec_create();
+static void vec_free(void* vec);
 
 #define vec_reserve(vec_name, val)                                       \
     {                                                                    \
@@ -27,27 +27,30 @@ void vec_free(void* vec);
 
 #endif
 
+#ifndef EVIL_VEC_H_IMPLEMENTATION
+#define EVIL_VEC_H_IMPLEMENTATION
+
 //------------------------------------------------------------------------------------------------------------------------------------
 // Vec Utils
 typedef char byte;
 
-byte* vec_get_wrapper(void* vec)
+static byte* vec_get_wrapper(void* vec)
 {
     return ((byte*)vec - 2 * sizeof(size_t));
 }
 
-size_t vec_size(void* vec)
+static size_t vec_size(void* vec)
 {
     return ((size_t*)vec_get_wrapper(vec))[0];
 }
 
-size_t vec_allocated_bytes(void* vec)
+static size_t vec_allocated_bytes(void* vec)
 {
     return ((size_t*)vec_get_wrapper(vec))[1];
 }
 //------------------------------------------------------------------------------------------------------------------------------------
 // Con- Destructor
-void* vec_create()
+static void* vec_create()
 {
     byte* vec_wrapper = (byte*)malloc(sizeof(size_t) * 2 + 1);
     ((size_t*)vec_wrapper)[0] = 0;                      // size
@@ -55,14 +58,14 @@ void* vec_create()
     return &vec_wrapper[sizeof(size_t) * 2];
 }
 
-void vec_free(void* vec)
+static void vec_free(void* vec)
 {
     free(vec_get_wrapper(vec));
     vec = NULL;
 }
 //------------------------------------------------------------------------------------------------------------------------------------
 // General Usage
-void* vec_wrapper_resize(void* vec, size_t n_bytes)
+static void* vec_wrapper_resize(void* vec, size_t n_bytes)
 {
     byte* vec_wrapper = vec_get_wrapper(vec);
     ((size_t*)vec_wrapper)[1] = n_bytes;
@@ -73,3 +76,4 @@ void* vec_wrapper_resize(void* vec, size_t n_bytes)
 // TODO: vec_insert
 
 //------------------------------------------------------------------------------------------------------------------------------------
+#endif
