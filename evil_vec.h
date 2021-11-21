@@ -71,6 +71,7 @@ static void* vec_wrapper_resize(void* vec, size_t n_bytes)
     return &vec_wrapper[sizeof(size_t) * 2];
 }
 // TODO: vec_rem
+//      --> can be achieved by just memcpy to the left byte
 // TODO: vec_insert
 
 //------------------------------------------------------------------------------------------------------------------------------------
