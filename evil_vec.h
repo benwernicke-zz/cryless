@@ -6,6 +6,10 @@
 static size_t vec_size(void* vec);
 static void* vec_create();
 static void vec_free(void* vec);
+typedef char byte;
+
+static void _vec_rem(byte* vec, size_t index, size_t type_size);
+#define vec_rem(vec, index) _vec_rem((byte*)vec, index, sizeof(typeof(*vec)));
 
 #define vec_reserve(vec_name, val)                                       \
     {                                                                    \
@@ -70,9 +74,12 @@ static void* vec_wrapper_resize(void* vec, size_t n_bytes)
     vec_wrapper = (byte*)realloc(vec_wrapper, vec_allocated_bytes(vec));
     return &vec_wrapper[sizeof(size_t) * 2];
 }
-// TODO: vec_rem
-//      --> can be achieved by just memcpy to the left byte
-// TODO: vec_insert
 
+static void _vec_rem(byte* vec, size_t index, size_t type_size)
+{
+    memcpy(&vec[type_size * index], &vec[(index + 1) * type_size], vec_size((void*)vec) * type_size);
+    ((size_t*)vec_get_wrapper(vec))[0]--;
+}
+// TODO: vec_insert
 //------------------------------------------------------------------------------------------------------------------------------------
 #endif
