@@ -19,11 +19,10 @@ static void _vec_rem(byte* vec, size_t index, size_t type_size);
 
 #define vec_push(vec, val)                                                                  \
     {                                                                                       \
-        typeof(*vec) _val = val;                                                            \
         size_t _val_size = sizeof(typeof(*vec));                                            \
         if (vec_size(vec) * _val_size + 2 * sizeof(size_t) + 1 >= vec_allocated_bytes(vec)) \
             vec = vec_wrapper_resize(vec, vec_allocated_bytes(vec) * 2 + _val_size);        \
-        vec[vec_size(vec)] = _val;                                                          \
+        vec[vec_size(vec)] = val;                                                           \
         ((size_t*)vec_get_wrapper(vec))[0]++;                                               \
     };
 
