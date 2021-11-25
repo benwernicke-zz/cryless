@@ -80,5 +80,11 @@ static void _vec_rem(byte* vec, size_t index, size_t type_size)
     ((size_t*)vec_get_wrapper(vec))[0]--;
 }
 // TODO: vec_insert
+// -->  for (int i = 1; i < vec_size(vec) + 1; i++) {
+//          temp = vec[i];
+//          vec[i] = store;
+//          store = temp;
+//      }
+//      something like this
 //------------------------------------------------------------------------------------------------------------------------------------
 #endif
