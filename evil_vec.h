@@ -17,6 +17,7 @@ static void _vec_rem(byte* vec, size_t index, size_t type_size);
         vec_wrapper_resize(vec_name, sizeof(size_t) * 2 + 1 + _n_bytes); \
     };
 
+// TODO: get rid of macro magic
 #define vec_push(vec, val)                                                                  \
     {                                                                                       \
         size_t _val_size = sizeof(typeof(*vec));                                            \
