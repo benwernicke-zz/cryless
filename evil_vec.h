@@ -2,8 +2,7 @@
 #define EVIL_VEC_H
 #include <stdlib.h>
 #include <string.h>
-// TODO: unconditional jumps ??
-//
+
 #define _VEC_WRAPPER_SIZE sizeof(size_t) * 2 + 1
 
 static size_t vec_size(void* vec);
@@ -14,11 +13,8 @@ typedef char byte;
 static void _vec_rem(byte* vec, size_t index, size_t type_size);
 #define vec_rem(vec, index) _vec_rem((byte*)vec, index, sizeof(*vec));
 
-#define vec_reserve(vec_name, val)                                  \
-    {                                                               \
-        size_t _n_bytes = sizeof(*vec_name) * val;                  \
-        vec_wrapper_resize(vec_name, _VEC_WRAPPER_SIZE + _n_bytes); \
-    };
+#define vec_reserve(vec, val) \
+    vec = vec_wrapper_resize(vec, _VEC_WRAPPER_SIZE + sizeof(*vec) * val);
 
 // TODO: get rid of macro magic
 #define vec_push(vec, val)                                                             \
