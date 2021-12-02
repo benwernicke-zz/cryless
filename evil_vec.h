@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 // TODO: unconditional jumps ??
+// TODO: fix vec_rem
 
 static size_t vec_size(void* vec);
 static void* vec_create();
