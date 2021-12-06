@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// TODO: resize ... change vec_size
+
 #define _VEC_WRAPPER_SIZE sizeof(size_t) * 2 + 1
 typedef char byte;
 
