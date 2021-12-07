@@ -8,11 +8,10 @@
 #define _VEC_WRAPPER_SIZE sizeof(size_t) * 2 + 1
 typedef char byte;
 
-inline static size_t vec_size(const void* vec);
-inline static void* vec_create();
-inline static void vec_free(void* vec);
+inline size_t vec_size(const void* vec);
+inline void* vec_create();
+inline void vec_free(void* vec);
 
-static void _vec_rem(byte* vec, size_t index, size_t type_size);
 #define vec_rem(vec, index) _vec_rem((byte*)vec, index, sizeof(*vec));
 
 #define vec_reserve(vec, val) \
@@ -42,7 +41,7 @@ inline static byte* vec_get_wrapper(const void* vec)
     return ((byte*)vec - 2 * sizeof(size_t));
 }
 
-inline static size_t vec_size(const void* vec)
+inline size_t vec_size(const void* vec)
 {
     return ((size_t*)vec_get_wrapper(vec))[0];
 }
@@ -53,7 +52,7 @@ inline static size_t vec_allocated_bytes(const void* vec)
 }
 //------------------------------------------------------------------------------------------------------------------------------------
 // Con- Destructor
-inline static void* vec_create()
+inline void* vec_create()
 {
     byte* vec_wrapper = (byte*)malloc(_VEC_WRAPPER_SIZE);
     ((size_t*)vec_wrapper)[0] = 0;                 // size
@@ -61,7 +60,7 @@ inline static void* vec_create()
     return &vec_wrapper[sizeof(size_t) * 2];
 }
 
-inline static void vec_free(void* vec)
+inline void vec_free(void* vec)
 {
     free(vec_get_wrapper(vec));
     vec = NULL;
